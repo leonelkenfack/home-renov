@@ -775,6 +775,14 @@ body {
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
+    body {
+        padding-top: 70px; /* Ajustement pour mobile */
+    }
+
+    /* .hero {
+        padding-left: 30px;
+    } */
+
     .nav-links {
         display: none;
     }
@@ -785,12 +793,14 @@ body {
 
     .navbar {
         position: relative;
+        padding: 0.8rem 0; /* Padding réduit sur mobile */
     }
 
     .hero-content {
         grid-template-columns: 1fr;
         text-align: center;
         gap: 2rem;
+        padding-top: 30px;
     }
 
     .hero-text h1 {
