@@ -48,6 +48,12 @@ body {
     color: #bdd631;
 }
 
+.logo-image {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+}
+
 .nav-links {
     display: flex;
     list-style: none;
@@ -535,8 +541,12 @@ body {
 }
 
 .footer-logo-img {
-    width: 100px;
+    width: 150px;
     height: auto;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .footer-tagline {
