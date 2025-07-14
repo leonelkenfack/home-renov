@@ -1,0 +1,11 @@
+# Configuration for PHPMailer SMTP (Gmail)
+SMTP_HOST="smtp.gmail.com"
+SMTP_PORT="587"
+SMTP_USERNAME="noreplyhomiqa@gmail.com"
+SMTP_PASSWORD="password-smtp"
+SMTP_SECURE="tls"
+
+# Email addresses
+MAIL_FROM_ADDRESS="noreplyhomiqa@gmail.com"
+MAIL_FROM_NAME="Home Renov' Inc."
+MAIL_TO_ADDRESS="email1@gmail.com,email2@gmail.com" 

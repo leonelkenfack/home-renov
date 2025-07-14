@@ -109,30 +109,50 @@ function initContactForm() {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Récupération des valeurs
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const project = document.getElementById('project').value;
-            const message = document.getElementById('message').value.trim();
+            const formData = new FormData(contactForm);
+            const submitButton = contactForm.querySelector('button[type="submit"]');
 
-            // Validation
+            // Validation (peut être simplifiée car le PHP revalide)
+            const name = formData.get('name').trim();
+            const email = formData.get('email').trim();
+            const project = formData.get('project');
+            const message = formData.get('message').trim();
+
             if (!name || !email || !project || !message) {
                 showFormMessage("Veuillez remplir tous les champs obligatoires.", "error");
                 return;
             }
 
-            // Validation email
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                showFormMessage("Veuillez entrer une adresse email valide.", "error");
-                return;
-            }
+            // Affiche un état de chargement
+            const originalButtonText = submitButton.innerHTML;
+            submitButton.innerHTML = 'Envoi en cours...';
+            submitButton.disabled = true;
 
-            // Simulation de l'envoi
-            setTimeout(() => {
-                showFormMessage("Votre message a été envoyé avec succès ! Nous vous recontacterons bientôt.", "success");
-                contactForm.reset();
-            }, 1000);
+            fetch('send_mail.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text()) // On récupère la réponse du PHP en texte brut
+            .then(text => {
+                // Les sections de débogage PHP peuvent interférer, on cherche le message final
+                if (text.includes('Merci! Votre message a été envoyé.')) {
+                    showFormMessage("Votre message a été envoyé avec succès ! Nous vous recontacterons bientôt.", "success");
+                    contactForm.reset();
+                } else {
+                    // Affiche la réponse complète du serveur (y compris les erreurs PHP/SMTP) pour le débogage
+                    showFormMessage("Une erreur est survenue. Détails : " + text, "error");
+                    console.error("Server response:", text);
+                }
+            })
+            .catch(error => {
+                showFormMessage("Une erreur réseau est survenue. Veuillez réessayer.", "error");
+                console.error("Fetch error:", error);
+            })
+            .finally(() => {
+                // Restaure le bouton
+                submitButton.innerHTML = originalButtonText;
+                submitButton.disabled = false;
+            });
         });
     }
 }
