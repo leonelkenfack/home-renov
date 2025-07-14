@@ -90,6 +90,8 @@ body {
 .hero {
     background: linear-gradient(135deg, #1e3a5f 0%, #2c4f73 100%);
     /* min-height: 100vh; */
+    padding-top: 150px;
+    padding-bottom: 50px;
     display: flex;
     align-items: center;
     position: relative;
